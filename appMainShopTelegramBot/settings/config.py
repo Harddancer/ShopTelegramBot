@@ -14,8 +14,8 @@ AUTHOR = 'mvandron'
 # родительская директория до директории settings
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # путь до базы данных 
-
-DATABASE = os.path.join('sqlite:///'+BASE_DIR, "shopdb","shop.sql",NAME_DB)
+DB = "shopdb"
+DATABASE = os.path.join('sqlite:///'+BASE_DIR,DB,NAME_DB)
 
 COUNT = 0
 
