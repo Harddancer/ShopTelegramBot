@@ -9,7 +9,7 @@ NAME_DB = 'botshop.sqlite'
 # версия приложения
 VERSION = '1.0'
 # автор приложния
-AUTHOR = 'mvandron'
+AUTHOR = 'mvandron/kmoceiko'
 
 # родительская директория до директории settings
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
