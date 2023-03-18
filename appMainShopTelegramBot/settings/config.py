@@ -36,13 +36,13 @@ class Hash:
 
 
 # токен выдается при регистрации приложения
-TOKEN = ''
+TOKEN = os.environ.get('TOKEN')
 # название БД
 # NAME_DB = 'botshop.sqlite'
 # версия приложения
-VERSION = '1.0'
+VERSION = os.environ.get('VERSION')
 # автор приложния
-AUTHOR = 'mvandron/kmoceiko'
+AUTHOR = os.environ.get('AUTHOR')
 
 # родительская директория до директории settings
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))

@@ -1,23 +1,30 @@
 import os
 
 from sqlalchemy import create_engine
+from sqlalchemy.engine import URL
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 # Подключение через .env postgres
-# DATABASE_LIB = os.environ.get('DB_CONNECT_LIB')
-# DATABASE_CONNECT_TYPE = os.environ.get('DB_CONNECT_TYPE')
-# DATABASE_HOST = os.environ.get('DB_CONNECT_IP')
-# DATABASE_PORT = os.environ.get('DB_CONNECT_PORT')
-# DATABASE_NAME = os.environ.get('DB_CONNECT_NAME')
-# DATABASE_USER = os.environ.get('DB_CONNECT_USER')
-# DATABASE_PASSWORD = os.environ.get('DB_CONNECT_PSWD')
+# DATABASE_HOST = os.environ.get('DATABASE_HOST')
+# DATABASE_PORT = os.environ.get('DATABASE_PORT')
+# DATABASE_NAME = os.environ.get('DATABASE_NAME')
+# DATABASE_USER = os.environ.get('DATABASE_USER')
+# DATABASE_PASSWORD = os.environ.get('DATABASE_PASSWORD')
 
-# SQLALCHEMY_DATABASE_URL = f'{DATABASE_CONNECT_TYPE}+{DATABASE_LIB}://{DATABASE_USER}:{DATABASE_PASSWORD}@{DATABASE_HOST}:{DATABASE_PORT}/{DATABASE_NAME}'
+# url_object = URL.create(
+#     'postgresql+psycopg2',
+#     username=DATABASE_USER,
+#     password=DATABASE_PASSWORD,
+#     host=DATABASE_HOST,
+#     port=DATABASE_PORT,
+#     database=DATABASE_NAME
+# )
 # engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
-engine = create_engine("sqlite:///botshop.db")
+SQLITE_NAME = os.environ.get('SQLITE_NAME')
+engine = create_engine(f"sqlite:///{SQLITE_NAME}")
 
 SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 
@@ -47,7 +54,8 @@ if __name__ == '__main__':
 
     # from db.crud.users_crud import create_user, get_user_by_id, update_user, delete_user
     # from db.schemas import UserSchema
-    #
+
+    # USER_TESTS
     # # test_1
     # _new_user = UserSchema(username='testuser', password='testpassword')
     # print(f'CREATE:\n{create_user(_new_user)}')

@@ -1,0 +1,16 @@
+# Общая информация
+VERSION=
+AUTHOR=
+
+# TelegramBot
+TOKEN=
+
+# Информация о базе данных SQLite
+SQLITE_NAME=
+
+# Информация по базе данных на Postgres
+DATABASE_HOST=
+DATABASE_PORT=
+DATABASE_NAME=
+DATABASE_USER=
+DATABASE_PASSWORD=
