@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from db.database import get_db
 from db.models import User
 from db.schemas import UserSchema
-from settings import config
+from appMainShopTelegramBot.settings import keyboard
 
 
 def create_user(obj: UserSchema, db: Session = next(get_db())):
@@ -26,7 +26,7 @@ def create_user(obj: UserSchema, db: Session = next(get_db())):
     # создание объекта пользователя
     new_user = User(
         username=obj.username,
-        password=config.Hash.bcrypt(obj.password)
+        password=keyboard.Hash.bcrypt(obj.password)
     )
 
     # создание записи в БД о пользователе
@@ -74,7 +74,7 @@ def update_user(user_id: int, obj: UserSchema, db: Session = next(get_db())):
 
     # обновление пользователя по id
     obj_dict = obj._asdict()
-    obj_dict['password'] = config.Hash.bcrypt(obj.password)
+    obj_dict['password'] = keyboard.Hash.bcrypt(obj.password)
     db.query(User).filter(User.id == user_id).update(obj_dict)
     try:
         db.commit()

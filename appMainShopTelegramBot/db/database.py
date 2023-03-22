@@ -41,7 +41,7 @@ def get_db():
         db.close()
 
 
-def create_db():
+def get_db():
     from models import Base
     try:
         Base.metadata.create_all(engine)
@@ -50,7 +50,7 @@ def create_db():
 
 
 if __name__ == '__main__':
-    create_db()
+    get_db()
 
     # from db.crud.users_crud import create_user, get_user_by_id, update_user, delete_user
     # from db.schemas import UserSchema
