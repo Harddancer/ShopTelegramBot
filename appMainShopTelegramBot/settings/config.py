@@ -3,6 +3,7 @@ import os
 from emoji import emojize
 # импортируем модуль passslib для шифрования
 from passlib.context import CryptContext
+from dotenv import load_dotenv
 
 pwd_cxt = CryptContext(schemes=['bcrypt'], deprecated='auto')
 
@@ -34,7 +35,7 @@ class Hash:
         """
         return pwd_cxt.verify(plain_password, self)
 
-
+load_dotenv()
 # токен выдается при регистрации приложения
 TOKEN = os.environ.get('TOKEN')
 # название БД
@@ -49,6 +50,8 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # путь до базы данных 
 # DB = "shopdb"
 # DATABASE = os.path.join('sqlite:///'+BASE_DIR,DB,NAME_DB)
+
+# для загрузки из env
 
 COUNT = 0
 
@@ -71,6 +74,7 @@ KEYBOARD = {
     'AMOUNT_ORDERS': COUNT,
     'UP': emojize('🔼'),
     'APPLAY': '✅ Оформить заказ',
+    'COMMENT': '✅ Отзывы о товаре',
     'COPY': '©️'
 }
 
