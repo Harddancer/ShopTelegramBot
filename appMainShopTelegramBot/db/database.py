@@ -1,5 +1,5 @@
 import os
-
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.engine import URL
 from sqlalchemy.exc import OperationalError
@@ -22,6 +22,8 @@ from sqlalchemy.orm import sessionmaker
 #     database=DATABASE_NAME
 # )
 # engine = create_engine(SQLALCHEMY_DATABASE_URL)
+# для загрузки из env
+load_dotenv()
 
 SQLITE_NAME = os.environ.get('SQLITE_NAME')
 engine = create_engine(f"sqlite:///{SQLITE_NAME}",future=True)
