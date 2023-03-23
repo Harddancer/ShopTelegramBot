@@ -1,7 +1,7 @@
 import os
 
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
-from sqlalchemy.engine import URL
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -23,7 +23,9 @@ from sqlalchemy.orm import sessionmaker
 # )
 # engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
-SQLITE_NAME = os.environ.get('SQLITE_NAME')
+load_dotenv()
+
+SQLITE_NAME = os.environ.get("SQLITE_NAME")
 engine = create_engine(f"sqlite:///{SQLITE_NAME}")
 
 SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
@@ -32,8 +34,7 @@ Base = declarative_base()
 
 
 def get_db():
-    """Создание сессии подключения к БД
-    """
+    """Создание сессии подключения к БД"""
     db = SessionLocal()
     try:
         yield db
@@ -42,14 +43,15 @@ def get_db():
 
 
 def create_db():
-    from db.models import Base
+    from models import Base
+
     try:
         Base.metadata.create_all(engine)
     except OperationalError:
-        print(f'Ошибка в подключении к базе данных')
+        print(f"Ошибка в подключении к базе данных")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     create_db()
 
     # from db.crud.users_crud import create_user, get_user_by_id, update_user, delete_user

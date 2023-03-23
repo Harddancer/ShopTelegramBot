@@ -1,9 +1,8 @@
-from sqlalchemy.exc import IntegrityError
-from sqlalchemy.orm import Session
-
 from db.database import get_db
 from db.models import OrderProduct
 from db.schemas import OrderProductSchema
+from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm import Session
 
 
 def create_order_product(obj: OrderProductSchema, db: Session = next(get_db())):
@@ -17,21 +16,18 @@ def create_order_product(obj: OrderProductSchema, db: Session = next(get_db())):
         Результат добавления
     """
     # создание объекта записи о товаре в заказе
-    new_order_product = OrderProduct(
-        product_id=obj.product_id,
-        order_id=obj.order_id
-    )
+    new_order_product = OrderProduct(product_id=obj.product_id, order_id=obj.order_id)
 
     # создание записи в БД о товаре в заказе
     db.add(new_order_product)
     try:
         db.commit()
     except IntegrityError:
-        msg = f'Ошибка обработки данных.'
-        return {'content': [], 'msg_type': 'e', 'msg': msg}
+        msg = f"Ошибка обработки данных."
+        return {"content": [], "msg_type": "e", "msg": msg}
     db.refresh(new_order_product)
 
-    return {'content': new_order_product, 'msg_type': 'a', 'msg': 'Done'}
+    return {"content": new_order_product, "msg_type": "a", "msg": "Done"}
 
 
 def get_order_product_by_id(order_product_id: int, db: Session = next(get_db())):
@@ -47,10 +43,10 @@ def get_order_product_by_id(order_product_id: int, db: Session = next(get_db()))
     # получение записи о товаре в заказе
     order_product = db.query(OrderProduct).filter(OrderProduct.id == order_product_id).first()
     if order_product:
-        return {'content': order_product, 'msg_type': 'a', 'msg': 'Done'}
+        return {"content": order_product, "msg_type": "a", "msg": "Done"}
     else:
-        msg = 'Записи о товаре в заказе с таким id не существует'
-        return {'content': [], 'msg_type': 'w', 'msg': msg}
+        msg = "Записи о товаре в заказе с таким id не существует"
+        return {"content": [], "msg_type": "w", "msg": msg}
 
 
 def update_order_product(order_product_id: int, obj: OrderProductSchema, db: Session = next(get_db())):
@@ -70,11 +66,11 @@ def update_order_product(order_product_id: int, obj: OrderProductSchema, db: Ses
     try:
         db.commit()
     except IntegrityError:
-        msg = f'Ошибка обработки данных.'
-        return {'content': [], 'msg_type': 'e', 'msg': msg}
+        msg = f"Ошибка обработки данных."
+        return {"content": [], "msg_type": "e", "msg": msg}
 
     updated_order_product = db.query(OrderProduct).filter(OrderProduct.id == order_product_id).first()
-    return {'content': updated_order_product, 'msg_type': 'a', 'msg': 'Done'}
+    return {"content": updated_order_product, "msg_type": "a", "msg": "Done"}
 
 
 def delete_order_product(order_product_id: int, db: Session = next(get_db())):
@@ -93,7 +89,7 @@ def delete_order_product(order_product_id: int, db: Session = next(get_db())):
     try:
         db.commit()
     except IntegrityError:
-        msg = 'Ошибка обработки данных.'
-        return {'content': [], 'msg_type': 'w', 'msg': msg}
+        msg = "Ошибка обработки данных."
+        return {"content": [], "msg_type": "w", "msg": msg}
 
-    return {'content': [], 'msg_type': 'a', 'msg': 'Товар успешно удален'}
+    return {"content": [], "msg_type": "a", "msg": "Товар успешно удален"}
