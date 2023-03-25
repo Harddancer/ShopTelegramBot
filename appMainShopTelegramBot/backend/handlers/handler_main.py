@@ -1,5 +1,5 @@
 # импортируем класс HandlerCommands обработка комманд
-from handlers.handler_interface import HandlerCommands
+from backend.handlers.handler_interface import HandlerCommands
 
 
 class HandlerMain:

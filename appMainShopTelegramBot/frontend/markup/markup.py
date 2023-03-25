@@ -1,10 +1,10 @@
 # импортируем специальные типы телеграм бота для создания элементов интерфейса
 # импортируем класс-менеджер для работы с библиотекой
 from db.database import get_db
-from telebot.types import KeyboardButton, ReplyKeyboardMarkup
 
 # импортируем настройки и утилиты
-from appMainShopTelegramBot.settings import config
+from settings import config
+from telebot.types import KeyboardButton, ReplyKeyboardMarkup
 
 
 class Keyboards:

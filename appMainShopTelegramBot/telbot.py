@@ -1,5 +1,6 @@
 # импортируем функцию создания объекта бота
 # импортируем основные настройки проекта
+from backend.handlers.handler_main import HandlerMain
 from settings import config
 from telebot import TeleBot
 

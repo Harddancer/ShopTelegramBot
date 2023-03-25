@@ -1,5 +1,5 @@
 # импортируем класс родитель
-from handlers.handler import Handler
+from backend.handlers.handler import Handler
 
 
 class HandlerCommands(Handler):
