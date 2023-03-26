@@ -1,15 +1,12 @@
 import os
 
 from dotenv import load_dotenv
-
-# импортируем модуль emoji для отображения эмоджи
 from emoji import emojize
 
 # импортируем модуль passslib для шифрования
 from passlib.context import CryptContext
 
 pwd_cxt = CryptContext(schemes=["bcrypt"], deprecated="auto")
-load_dotenv()
 
 
 class Hash:
@@ -48,18 +45,12 @@ TOKEN = os.environ.get("TOKEN")
 VERSION = os.environ.get("VERSION")
 # автор приложния
 AUTHOR = os.environ.get("AUTHOR")
-
 # родительская директория до директории settings
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # путь до базы данных
 # DB = "shopdb"
 # DATABASE = os.path.join('sqlite:///'+BASE_DIR,DB,NAME_DB)
-
-# для загрузки из env
-
 COUNT = 0
-
-# кнопки управления
 KEYBOARD = {
     "CHOOSE_GOODS": emojize(":open_file_folder: Выбрать товар"),
     "INFO": emojize(":speech_balloon: О магазине"),

@@ -1,16 +1,11 @@
-# импортируем функцию создания объекта бота
-# импортируем основные настройки проекта
 from backend.handlers.handler_main import HandlerMain
 from settings import config
 from telebot import TeleBot
 
-# импортируем главный класс-обработчик бота
-
 
 class TelBot:
     """
-    Основной класс телеграмм бота (сервер), в основе которого
-    используется библиотека pyTelegramBotAPI
+    Основной класс телеграмм бота
     """
 
     __version__ = config.VERSION
