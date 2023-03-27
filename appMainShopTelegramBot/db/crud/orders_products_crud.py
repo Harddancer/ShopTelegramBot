@@ -1,3 +1,5 @@
+import logging
+
 from db.database import get_db
 from db.models import OrderProduct
 from db.schemas import OrderProductSchema
@@ -24,6 +26,7 @@ def create_order_product(obj: OrderProductSchema, db: Session = next(get_db())):
         db.commit()
     except IntegrityError:
         msg = f"Ошибка обработки данных."
+        logging.warning(msg)
         return {"content": [], "msg_type": "e", "msg": msg}
     db.refresh(new_order_product)
 
@@ -46,6 +49,7 @@ def get_order_product_by_id(order_product_id: int, db: Session = next(get_db()))
         return {"content": order_product, "msg_type": "a", "msg": "Done"}
     else:
         msg = "Записи о товаре в заказе с таким id не существует"
+        logging.warning(msg)
         return {"content": [], "msg_type": "w", "msg": msg}
 
 
@@ -67,6 +71,7 @@ def update_order_product(order_product_id: int, obj: OrderProductSchema, db: Ses
         db.commit()
     except IntegrityError:
         msg = f"Ошибка обработки данных."
+        logging.warning(msg)
         return {"content": [], "msg_type": "e", "msg": msg}
 
     updated_order_product = db.query(OrderProduct).filter(OrderProduct.id == order_product_id).first()
@@ -90,6 +95,7 @@ def delete_order_product(order_product_id: int, db: Session = next(get_db())):
         db.commit()
     except IntegrityError:
         msg = "Ошибка обработки данных."
+        logging.warning(msg)
         return {"content": [], "msg_type": "w", "msg": msg}
 
     return {"content": [], "msg_type": "a", "msg": "Товар успешно удален"}

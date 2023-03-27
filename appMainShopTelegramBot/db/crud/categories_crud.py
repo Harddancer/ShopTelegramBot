@@ -1,3 +1,5 @@
+import logging
+
 from db.database import get_db
 from db.models import Category
 from db.schemas import CategorySchema
@@ -30,6 +32,7 @@ def create_category(obj: CategorySchema, db: Session = next(get_db())):
         db.commit()
     except IntegrityError:
         msg = f"Ошибка обработки данных."
+        logging.warning(msg)
         return {"content": [], "msg_type": "e", "msg": msg}
     db.refresh(new_category)
 
@@ -52,6 +55,7 @@ def get_category_by_id(category_id: int, db: Session = next(get_db())):
         return {"content": category, "msg_type": "a", "msg": "Done"}
     else:
         msg = "Категории с таким id не существует"
+        logging.warning(msg)
         return {"content": [], "msg_type": "w", "msg": msg}
 
 
@@ -73,6 +77,7 @@ def update_category(category_id: int, obj: CategorySchema, db: Session = next(ge
         db.commit()
     except IntegrityError:
         msg = f"Ошибка обработки данных."
+        logging.warning(msg)
         return {"content": [], "msg_type": "e", "msg": msg}
 
     updated_category = db.query(Category).filter(Category.id == category_id).first()
@@ -96,6 +101,7 @@ def delete_category(category_id: int, db: Session = next(get_db())):
         db.commit()
     except IntegrityError:
         msg = "Ошибка обработки данных."
+        logging.warning(msg)
         return {"content": [], "msg_type": "w", "msg": msg}
 
     return {"content": [], "msg_type": "a", "msg": "Категория успешно удалена"}

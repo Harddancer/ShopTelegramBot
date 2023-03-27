@@ -1,3 +1,5 @@
+import logging
+
 from db.database import get_db
 from db.models import Answer
 from db.schemas import AnswerSchema
@@ -25,6 +27,7 @@ def create_answer(obj: AnswerSchema, db: Session = next(get_db())):
         db.commit()
     except IntegrityError:
         msg = f"Ошибка обработки данных."
+        logging.warning(msg)
         return {"content": [], "msg_type": "e", "msg": msg}
     db.refresh(new_answer)
 
@@ -47,6 +50,7 @@ def get_answer_by_id(answer_id: int, db: Session = next(get_db())):
         return {"content": answer, "msg_type": "a", "msg": "Done"}
     else:
         msg = "Отзыва с таким id не существует"
+        logging.warning(msg)
         return {"content": [], "msg_type": "w", "msg": msg}
 
 
@@ -68,6 +72,7 @@ def update_answer(answer_id: int, obj: AnswerSchema, db: Session = next(get_db()
         db.commit()
     except IntegrityError:
         msg = f"Ошибка обработки данных."
+        logging.warning(msg)
         return {"content": [], "msg_type": "e", "msg": msg}
 
     updated_answer = db.query(Answer).filter(Answer.id == answer_id).first()
@@ -91,6 +96,7 @@ def delete_answer(answer_id: int, db: Session = next(get_db())):
         db.commit()
     except IntegrityError:
         msg = "Ошибка обработки данных."
+        logging.warning(msg)
         return {"content": [], "msg_type": "w", "msg": msg}
 
     return {"content": [], "msg_type": "a", "msg": "Отзыв успешно удален"}

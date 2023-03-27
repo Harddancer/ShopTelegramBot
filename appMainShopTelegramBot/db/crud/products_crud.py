@@ -1,3 +1,5 @@
+import logging
+
 from db.database import get_db
 from db.models import Product
 from db.schemas import ProductSchema
@@ -37,6 +39,7 @@ def create_product(obj: ProductSchema, db: Session = next(get_db())):
         db.commit()
     except IntegrityError:
         msg = f"Ошибка обработки данных."
+        logging.warning(msg)
         return {"content": [], "msg_type": "e", "msg": msg}
     db.refresh(new_product)
 
@@ -59,6 +62,7 @@ def get_product_by_id(product_id: int, db: Session = next(get_db())):
         return {"content": product, "msg_type": "a", "msg": "Done"}
     else:
         msg = "Товара с таким id не существует"
+        logging.warning(msg)
         return {"content": [], "msg_type": "w", "msg": msg}
 
 
@@ -80,6 +84,7 @@ def update_product(product_id: int, obj: ProductSchema, db: Session = next(get_d
         db.commit()
     except IntegrityError:
         msg = f"Ошибка обработки данных."
+        logging.warning(msg)
         return {"content": [], "msg_type": "e", "msg": msg}
 
     updated_product = db.query(Product).filter(Product.id == product_id).first()
@@ -103,6 +108,7 @@ def delete_product(product_id: int, db: Session = next(get_db())):
         db.commit()
     except IntegrityError:
         msg = "Ошибка обработки данных."
+        logging.warning(msg)
         return {"content": [], "msg_type": "w", "msg": msg}
 
     return {"content": [], "msg_type": "a", "msg": "Товар успешно удален"}

@@ -1,3 +1,5 @@
+import logging
+
 from db.database import get_db
 from db.models import User
 from db.schemas import UserSchema
@@ -31,6 +33,7 @@ def create_user(obj: UserSchema, db: Session = next(get_db())):
         db.commit()
     except IntegrityError:
         msg = f"Ошибка обработки данных."
+        logging.warning(msg)
         return {"content": [], "msg_type": "e", "msg": msg}
     db.refresh(new_user)
 
@@ -53,6 +56,7 @@ def get_user_by_id(user_id: int, db: Session = next(get_db())):
         return {"content": user, "msg_type": "a", "msg": "Done"}
     else:
         msg = "Пользователя с таким id не существует"
+        logging.warning(msg)
         return {"content": [], "msg_type": "w", "msg": msg}
 
 
@@ -76,6 +80,7 @@ def update_user(user_id: int, obj: UserSchema, db: Session = next(get_db())):
         db.commit()
     except IntegrityError:
         msg = f"Ошибка обработки данных."
+        logging.warning(msg)
         return {"content": [], "msg_type": "e", "msg": msg}
 
     updated_user = db.query(User).filter(User.id == user_id).first()
@@ -99,6 +104,7 @@ def delete_user(user_id: int, db: Session = next(get_db())):
         db.commit()
     except IntegrityError:
         msg = "Ошибка обработки данных."
+        logging.warning(msg)
         return {"content": [], "msg_type": "w", "msg": msg}
 
     return {"content": [], "msg_type": "a", "msg": "Пользователь успешно удален"}

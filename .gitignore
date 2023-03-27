@@ -1,5 +1,4 @@
 /appMainShopTelegramBot/.env
-/appMainShopTelegramBot/db/botshop.db
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -249,3 +248,4 @@ fabric.properties
 
 # Built Visual Studio Code Extensions
 *.vsix
+/appMainShopTelegramBot/botshop.db
