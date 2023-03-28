@@ -1,7 +1,7 @@
-import os
 import logging
+import os
 
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.ext.declarative import declarative_base
@@ -24,7 +24,7 @@ from sqlalchemy.orm import sessionmaker
 # )
 # engine = create_engine(SQLALCHEMY_DATABASE_URL)
 # для загрузки из env
-# load_dotenv()
+load_dotenv()
 
 SQLITE_NAME = os.environ.get("SQLITE_NAME")
 engine = create_engine(f"sqlite:///{SQLITE_NAME}", future=True)
