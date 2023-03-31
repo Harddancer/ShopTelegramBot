@@ -1,16 +1,21 @@
+# импортируем модуль logging для логирования
+import logging
+import logging.config
 import os
-# импортируем модуль emoji для отображения эмоджи
-from emoji import emojize
-# импортируем модуль passslib для шифрования
-from passlib.context import CryptContext
+
 from dotenv import load_dotenv
 
-pwd_cxt = CryptContext(schemes=['bcrypt'], deprecated='auto')
+# импортируем модуль emoji для отображения эмоджи
+from emoji import emojize
+
+# импортируем модуль passslib для шифрования
+from passlib.context import CryptContext
+
+pwd_cxt = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 class Hash:
-    """Клас шифрования и верификации
-    """
+    """Клас шифрования и верификации"""
 
     def bcrypt(self: str):
         """Метод, шифрующий строку
@@ -35,19 +40,20 @@ class Hash:
         """
         return pwd_cxt.verify(plain_password, self)
 
+
 load_dotenv()
 # токен выдается при регистрации приложения
-TOKEN = os.environ.get('TOKEN')
+TOKEN = os.environ.get("TOKEN")
 # название БД
 # NAME_DB = 'botshop.sqlite'
 # версия приложения
-VERSION = os.environ.get('VERSION')
+VERSION = os.environ.get("VERSION")
 # автор приложния
-AUTHOR = os.environ.get('AUTHOR')
+AUTHOR = os.environ.get("AUTHOR")
 
 # родительская директория до директории settings
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-# путь до базы данных 
+# путь до базы данных
 # DB = "shopdb"
 # DATABASE = os.path.join('sqlite:///'+BASE_DIR,DB,NAME_DB)
 
@@ -57,36 +63,44 @@ COUNT = 0
 
 # кнопки управления
 KEYBOARD = {
-    'CHOOSE_GOODS': emojize(':open_file_folder: Выбрать товар'),
-    'INFO': emojize(':speech_balloon: О магазине'),
-    'SETTINGS': emojize('⚙️ Настройки'),
-    'SEMIPRODUCT': emojize(':pizza: Полуфабрикаты'),
-    'GROCERY': emojize(':bread: Бакалея'),
-    'ICE_CREAM': emojize(':shaved_ice: Мороженое'),
-    '<<': emojize('⏪'),
-    '>>': emojize('⏩'),
-    'BACK_STEP': emojize('◀️'),
-    'NEXT_STEP': emojize('▶️'),
-    'ORDER': emojize('✅ ЗАКАЗ'),
-    'X': emojize('❌'),
-    'DOUWN': emojize('🔽'),
-    'AMOUNT_PRODUCT': COUNT,
-    'AMOUNT_ORDERS': COUNT,
-    'UP': emojize('🔼'),
-    'APPLAY': '✅ Оформить заказ',
-    'COMMENT': '✅ Отзывы о товаре',
-    'COPY': '©️'
+    "CHOOSE_GOODS": emojize(":open_file_folder: Выбрать товар"),
+    "INFO": emojize(":speech_balloon: О магазине"),
+    "SETTINGS": emojize("⚙️ Настройки"),
+    "SEMIPRODUCT": emojize(":pizza: Полуфабрикаты"),
+    "GROCERY": emojize(":bread: Бакалея"),
+    "ICE_CREAM": emojize(":shaved_ice: Мороженое"),
+    "<<": emojize("⏪"),
+    ">>": emojize("⏩"),
+    "BACK_STEP": emojize("◀️"),
+    "NEXT_STEP": emojize("▶️"),
+    "ORDER": emojize("✅ ЗАКАЗ"),
+    "X": emojize("❌"),
+    "DOUWN": emojize("🔽"),
+    "AMOUNT_PRODUCT": COUNT,
+    "AMOUNT_ORDERS": COUNT,
+    "UP": emojize("🔼"),
+    "APPLAY": "✅ Оформить заказ",
+    "COMMENT": "✅ Отзывы о товаре",
+    "COPY": "©️",
 }
 
 # id категорий продуктов
 CATEGORY = {
-    'SEMIPRODUCT': 1,
-    'GROCERY': 2,
-    'ICE_CREAM': 3,
+    "SEMIPRODUCT": 1,
+    "GROCERY": 2,
+    "ICE_CREAM": 3,
 }
 
 # названия команд
 COMMANDS = {
-    'START': "start",
-    'HELP': "help",
+    "START": "start",
+    "HELP": "help",
 }
+
+# Логирование
+if not os.path.isdir("logs"):
+    os.makedirs("logs")
+
+log_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../logging.conf")
+logging.config.fileConfig(log_file_path)
+logging.info(f"Конфигурация логов загружена")

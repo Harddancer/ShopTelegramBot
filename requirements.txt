@@ -1,4 +1,4 @@
-asgiref==3.6.0
+asgiref==3.6.0 
 emoji==2.2.0
 greenlet==2.0.2
 SQLAlchemy==1.4.46
@@ -6,3 +6,4 @@ sqlparse==0.4.3
 typing_extensions==4.5.0
 python-dotenv==1.0.0
 passlib~=1.7.4
+pyTelegramBotAPI==4.10.0

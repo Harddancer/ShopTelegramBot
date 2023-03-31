@@ -1,10 +1,11 @@
-from sqlalchemy.exc import IntegrityError
-from sqlalchemy.orm import Session
+import logging
 
 from db.database import get_db
 from db.models import User
 from db.schemas import UserSchema
-from appMainShopTelegramBot.settings import config
+from settings import config
+from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm import Session
 
 
 def create_user(obj: UserSchema, db: Session = next(get_db())):
@@ -20,25 +21,23 @@ def create_user(obj: UserSchema, db: Session = next(get_db())):
     # проверка существования пользователя
     user = db.query(User).filter(User.username == obj.username).first()
     if user:
-        msg = 'Пользователь с таким именем уже существует'
-        return {'content': user, 'msg_type': 'w', 'msg': msg}
+        msg = "Пользователь с таким именем уже существует"
+        return {"content": user, "msg_type": "w", "msg": msg}
 
     # создание объекта пользователя
-    new_user = User(
-        username=obj.username,
-        password=config.Hash.bcrypt(obj.password)
-    )
+    new_user = User(username=obj.username, password=config.Hash.bcrypt(obj.password))
 
     # создание записи в БД о пользователе
     db.add(new_user)
     try:
         db.commit()
     except IntegrityError:
-        msg = f'Ошибка обработки данных.'
-        return {'content': [], 'msg_type': 'e', 'msg': msg}
+        msg = f"Ошибка обработки данных."
+        logging.warning(msg)
+        return {"content": [], "msg_type": "e", "msg": msg}
     db.refresh(new_user)
 
-    return {'content': new_user, 'msg_type': 'a', 'msg': 'Done'}
+    return {"content": new_user, "msg_type": "a", "msg": "Done"}
 
 
 def get_user_by_id(user_id: int, db: Session = next(get_db())):
@@ -54,10 +53,11 @@ def get_user_by_id(user_id: int, db: Session = next(get_db())):
     # получение пользователя
     user = db.query(User).filter(User.id == user_id).first()
     if user:
-        return {'content': user, 'msg_type': 'a', 'msg': 'Done'}
+        return {"content": user, "msg_type": "a", "msg": "Done"}
     else:
-        msg = 'Пользователя с таким id не существует'
-        return {'content': [], 'msg_type': 'w', 'msg': msg}
+        msg = "Пользователя с таким id не существует"
+        logging.warning(msg)
+        return {"content": [], "msg_type": "w", "msg": msg}
 
 
 def update_user(user_id: int, obj: UserSchema, db: Session = next(get_db())):
@@ -74,16 +74,17 @@ def update_user(user_id: int, obj: UserSchema, db: Session = next(get_db())):
 
     # обновление пользователя по id
     obj_dict = obj._asdict()
-    obj_dict['password'] = config.Hash.bcrypt(obj.password)
+    obj_dict["password"] = config.Hash.bcrypt(obj.password)
     db.query(User).filter(User.id == user_id).update(obj_dict)
     try:
         db.commit()
     except IntegrityError:
-        msg = f'Ошибка обработки данных.'
-        return {'content': [], 'msg_type': 'e', 'msg': msg}
+        msg = f"Ошибка обработки данных."
+        logging.warning(msg)
+        return {"content": [], "msg_type": "e", "msg": msg}
 
     updated_user = db.query(User).filter(User.id == user_id).first()
-    return {'content': updated_user, 'msg_type': 'a', 'msg': 'Done'}
+    return {"content": updated_user, "msg_type": "a", "msg": "Done"}
 
 
 def delete_user(user_id: int, db: Session = next(get_db())):
@@ -102,7 +103,8 @@ def delete_user(user_id: int, db: Session = next(get_db())):
     try:
         db.commit()
     except IntegrityError:
-        msg = 'Ошибка обработки данных.'
-        return {'content': [], 'msg_type': 'w', 'msg': msg}
+        msg = "Ошибка обработки данных."
+        logging.warning(msg)
+        return {"content": [], "msg_type": "w", "msg": msg}
 
-    return {'content': [], 'msg_type': 'a', 'msg': 'Пользователь успешно удален'}
+    return {"content": [], "msg_type": "a", "msg": "Пользователь успешно удален"}

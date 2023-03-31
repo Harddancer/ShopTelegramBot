@@ -1,9 +1,10 @@
-from sqlalchemy.exc import IntegrityError
-from sqlalchemy.orm import Session
+import logging
 
 from db.database import get_db
 from db.models import Category
 from db.schemas import CategorySchema
+from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm import Session
 
 
 def create_category(obj: CategorySchema, db: Session = next(get_db())):
@@ -19,25 +20,23 @@ def create_category(obj: CategorySchema, db: Session = next(get_db())):
     # проверка существования категории
     category = db.query(Category).filter(Category.name == obj.name).first()
     if category:
-        msg = 'Категория с таким названием уже существует'
-        return {'content': category, 'msg_type': 'w', 'msg': msg}
+        msg = "Категория с таким названием уже существует"
+        return {"content": category, "msg_type": "w", "msg": msg}
 
     # создание объекта категории
-    new_category = Category(
-        name=obj.name,
-        is_active=obj.is_active
-    )
+    new_category = Category(name=obj.name, is_active=obj.is_active)
 
     # создание записи в БД о категории
     db.add(new_category)
     try:
         db.commit()
     except IntegrityError:
-        msg = f'Ошибка обработки данных.'
-        return {'content': [], 'msg_type': 'e', 'msg': msg}
+        msg = f"Ошибка обработки данных."
+        logging.warning(msg)
+        return {"content": [], "msg_type": "e", "msg": msg}
     db.refresh(new_category)
 
-    return {'content': new_category, 'msg_type': 'a', 'msg': 'Done'}
+    return {"content": new_category, "msg_type": "a", "msg": "Done"}
 
 
 def get_category_by_id(category_id: int, db: Session = next(get_db())):
@@ -53,10 +52,11 @@ def get_category_by_id(category_id: int, db: Session = next(get_db())):
     # получение категории
     category = db.query(Category).filter(Category.id == category_id).first()
     if category:
-        return {'content': category, 'msg_type': 'a', 'msg': 'Done'}
+        return {"content": category, "msg_type": "a", "msg": "Done"}
     else:
-        msg = 'Категории с таким id не существует'
-        return {'content': [], 'msg_type': 'w', 'msg': msg}
+        msg = "Категории с таким id не существует"
+        logging.warning(msg)
+        return {"content": [], "msg_type": "w", "msg": msg}
 
 
 def update_category(category_id: int, obj: CategorySchema, db: Session = next(get_db())):
@@ -76,11 +76,12 @@ def update_category(category_id: int, obj: CategorySchema, db: Session = next(ge
     try:
         db.commit()
     except IntegrityError:
-        msg = f'Ошибка обработки данных.'
-        return {'content': [], 'msg_type': 'e', 'msg': msg}
+        msg = f"Ошибка обработки данных."
+        logging.warning(msg)
+        return {"content": [], "msg_type": "e", "msg": msg}
 
     updated_category = db.query(Category).filter(Category.id == category_id).first()
-    return {'content': updated_category, 'msg_type': 'a', 'msg': 'Done'}
+    return {"content": updated_category, "msg_type": "a", "msg": "Done"}
 
 
 def delete_category(category_id: int, db: Session = next(get_db())):
@@ -99,7 +100,8 @@ def delete_category(category_id: int, db: Session = next(get_db())):
     try:
         db.commit()
     except IntegrityError:
-        msg = 'Ошибка обработки данных.'
-        return {'content': [], 'msg_type': 'w', 'msg': msg}
+        msg = "Ошибка обработки данных."
+        logging.warning(msg)
+        return {"content": [], "msg_type": "w", "msg": msg}
 
-    return {'content': [], 'msg_type': 'a', 'msg': 'Категория успешно удалена'}
+    return {"content": [], "msg_type": "a", "msg": "Категория успешно удалена"}
