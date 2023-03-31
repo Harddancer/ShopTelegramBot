@@ -54,13 +54,13 @@ def create_db():
 if __name__ == '__main__':
     create_db()
 
-    # from db.crud.users_crud import create_user, get_user_by_id, update_user, delete_user
-    # from db.schemas import UserSchema
+#from crud.users_crud import create_user, get_user_by_id, update_user, delete_user
+#from schemas import UserSchema
 
-    # USER_TESTS
-    # # test_1
-    # _new_user = UserSchema(username='testuser', password='testpassword')
-    # print(f'CREATE:\n{create_user(_new_user)}')
+# USER_TESTS
+# test_1
+#_new_user = UserSchema(username='testuser', password='testpassword')
+#print(f'CREATE:\n{create_user(_new_user)}')
     #
     # # test_2
     # _user_id = 1
