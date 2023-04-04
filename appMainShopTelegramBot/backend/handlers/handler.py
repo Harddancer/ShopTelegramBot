@@ -5,7 +5,7 @@ import abc
 from db.database import get_db
 
 # импортируем разметку клавиатуры и клавиш
-from frontend.markup.markup import Keyboards
+from frontend.markup import Keyboards
 
 
 class Handler(metaclass=abc.ABCMeta):
