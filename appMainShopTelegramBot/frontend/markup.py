@@ -92,8 +92,8 @@ class Keyboards:
         self.markup = InlineKeyboardMarkup(row_width=1)
         # загружаем в названия инлайн-кнопок данные
         # из БД в соответствие с категорией товара
-        for itm in get_product_by_category_id(category):
+        list_product = get_product_by_category_id(category)["content"]
+        for itm in list_product:
             self.markup.add(self.set_inline_btn(itm))
-
         return self.markup
     
