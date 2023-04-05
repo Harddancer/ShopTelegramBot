@@ -1,10 +1,9 @@
-# импортируем специальные типы телеграм бота для создания элементов интерфейса
-# импортируем класс-менеджер для работы с библиотекой
-from db.database import get_db
-
+from db.crud.products_crud import get_product_by_category_id
 # импортируем настройки и утилиты
 from settings import config
-from telebot.types import KeyboardButton, ReplyKeyboardMarkup
+# импортируем специальные типы телеграм бота для создания элементов интерфейса
+from telebot.types import KeyboardButton, ReplyKeyboardMarkup, \
+    ReplyKeyboardRemove, InlineKeyboardMarkup, InlineKeyboardButton
 
 
 class Keyboards:
@@ -16,8 +15,6 @@ class Keyboards:
 
     def __init__(self):
         self.markup = None
-        # инициализируем сессию  БД
-        self.BD = get_db()
 
     def set_btn(self, name, step=0, quantity=0):
         """
@@ -60,3 +57,43 @@ class Keyboards:
         # рассположение кнопок в меню
         self.markup.row(itm_btn_1)
         return self.markup
+
+    @staticmethod
+    def remove_menu():
+        """
+        Удаляет меню
+        """
+        return ReplyKeyboardRemove()
+
+    def category_menu(self):
+        """
+        Создает разметку кнопок в меню категорий товара и возвращает разметку
+        """
+        self.markup = ReplyKeyboardMarkup(True, True, row_width=1)
+        self.markup.add(self.set_btn('SEMIPRODUCT'))
+        self.markup.add(self.set_btn('GROCERY'))
+        self.markup.add(self.set_btn('ICE_CREAM'))
+        self.markup.row(self.set_btn('<<'), self.set_btn('ORDER'))
+        return self.markup
+
+    @staticmethod
+    def set_inline_btn(name):
+        """
+        Создает и возвращает инлайн-кнопку по входным параметрам
+        """
+        return InlineKeyboardButton(str(name),
+                                    callback_data=str(name.id))
+
+    def set_select_category(self, category):
+        """
+        Создает разметку инлайн-кнопок в выбранной
+        категории товара и возвращает разметку
+        """
+        self.markup = InlineKeyboardMarkup(row_width=1)
+        # загружаем в названия инлайн-кнопок данные
+        # из БД в соответствие с категорией товара
+        for itm in get_product_by_category_id(category):
+            self.markup.add(self.set_inline_btn(itm))
+
+        return self.markup
+    
