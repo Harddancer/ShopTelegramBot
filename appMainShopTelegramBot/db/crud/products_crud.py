@@ -66,19 +66,24 @@ def get_product_by_id(product_id: int, db: Session = next(get_db())):
         return {"content": [], "msg_type": "w", "msg": msg}
 
 
-def get_product_by_category_id(category: int, db: Session = next(get_db())):
+def get_product_by_category_id(category_id: int, db: Session = next(get_db())):
     """Получение товара из БД по category_id
         
     Args:
-    category: id категории
+    category_id: id категории
     db: сессия подключения к базе данных
 
     Returns:
     Запись о товарах из БД согласно выбраной категории
     """    
     # получение всех товаров в категории
-    product_by_category_id = db.query(Product).filter(Product.category_id == category).all()
-    return product_by_category_id
+    product_by_category_id = db.query(Product).filter(Product.category_id == category_id).all()
+    if product_by_category_id:
+        return {"content": product_by_category_id, "msg_type": "a", "msg": "Done"}
+    else:
+        msg = "Товаров, относящихся к запрашиваемй категории не существует"
+        logging.warning(msg)
+        return {"content": [], "msg_type": "w", "msg": msg}
 
 
 def update_product(product_id: int, obj: ProductSchema, db: Session = next(get_db())):

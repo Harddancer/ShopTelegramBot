@@ -103,4 +103,6 @@ if not os.path.isdir("logs"):
 
 log_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../logging.conf")
 logging.config.fileConfig(log_file_path)
+logging.getLogger("urllib3").setLevel(logging.WARNING)
+logging.getLogger("urllib3").propagate = False
 logging.info(f"Конфигурация логов загружена")

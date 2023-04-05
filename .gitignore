@@ -249,3 +249,4 @@ fabric.properties
 # Built Visual Studio Code Extensions
 *.vsix
 /appMainShopTelegramBot/botshop.db
+/appMainShopTelegramBot/logs/
