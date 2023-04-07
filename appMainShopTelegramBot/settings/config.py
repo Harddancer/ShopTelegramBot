@@ -66,9 +66,9 @@ KEYBOARD = {
     "CHOOSE_GOODS": emojize(":open_file_folder: Выбрать товар"),
     "INFO": emojize(":speech_balloon: О магазине"),
     "SETTINGS": emojize("⚙️ Настройки"),
-    "SEMIPRODUCT": emojize(":pizza: Полуфабрикаты"),
-    "GROCERY": emojize(":bread: Бакалея"),
-    "ICE_CREAM": emojize(":shaved_ice: Мороженое"),
+    "EUROPEAN_MENU": emojize(":fork_and_knife_with_plate: Европейское меню"),
+    "JAPANESE_MENU": emojize(":chopsticks: Японское меню"),
+    "PIZZA": emojize(":pizza: Пицца"),
     "<<": emojize("⏪"),
     ">>": emojize("⏩"),
     "BACK_STEP": emojize("◀️"),
@@ -86,9 +86,9 @@ KEYBOARD = {
 
 # id категорий продуктов
 CATEGORY = {
-    "SEMIPRODUCT": 1,
-    "GROCERY": 2,
-    "ICE_CREAM": 3,
+    "EUROPEAN_MENU": 1,
+    "JAPANESE_MENU": 2,
+    "PIZZA": 3,
 }
 
 # названия команд

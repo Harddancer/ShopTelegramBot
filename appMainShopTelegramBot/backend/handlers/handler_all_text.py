@@ -78,11 +78,11 @@ class HandlerAllText(Handler):
                 self.pressed_btn_back(message)
 
             # ********** меню (категории товара, ПФ, Бакалея, Мороженое)******
-            if message.text == config.KEYBOARD['SEMIPRODUCT']:
-                self.pressed_btn_product(message, 'SEMIPRODUCT')
+            if message.text == config.KEYBOARD['EUROPEAN_MENU']:
+                self.pressed_btn_product(message, 'EUROPEAN_MENU')
 
-            if message.text == config.KEYBOARD['GROCERY']:
-                self.pressed_btn_product(message, 'GROCERY')
+            if message.text == config.KEYBOARD['JAPANESE_MENU']:
+                self.pressed_btn_product(message, 'JAPANESE_MENU')
 
-            if message.text == config.KEYBOARD['ICE_CREAM']:
-                self.pressed_btn_product(message, 'ICE_CREAM')
+            if message.text == config.KEYBOARD['PIZZA']:
+                self.pressed_btn_product(message, 'PIZZA')
