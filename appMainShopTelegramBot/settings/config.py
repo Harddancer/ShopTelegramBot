@@ -63,13 +63,13 @@ COUNT = 0
 
 # кнопки управления
 KEYBOARD = {
-    "CHOOSE_GOODS": emojize(":open_file_folder: Выбрать товар"),
-    "INFO": emojize(":speech_balloon: О магазине"),
+    "CHOOSE_GOODS": emojize(":open_book: Меню"),
+    "INFO": emojize(":speech_balloon: О кафе"),
     "SETTINGS": emojize("⚙️ Настройки"),
     "EUROPEAN_MENU": emojize(":fork_and_knife_with_plate: Европейское меню"),
     "JAPANESE_MENU": emojize(":chopsticks: Японское меню"),
     "PIZZA": emojize(":pizza: Пицца"),
-    "<<": emojize("⏪"),
+    "<<": emojize("⏪ Вернуться назад"),
     ">>": emojize("⏩"),
     "BACK_STEP": emojize("◀️"),
     "NEXT_STEP": emojize("▶️"),
@@ -80,7 +80,7 @@ KEYBOARD = {
     "AMOUNT_ORDERS": COUNT,
     "UP": emojize("🔼"),
     "APPLAY": "✅ Оформить заказ",
-    "COMMENT": "✅ Отзывы о товаре",
+    "COMMENT": "✅ Отзывы о блюдах",
     "COPY": "©️",
 }
 

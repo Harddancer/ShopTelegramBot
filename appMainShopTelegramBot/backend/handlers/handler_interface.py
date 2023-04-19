@@ -16,7 +16,7 @@ class HandlerCommands(Handler):
         """
         self.bot.send_message(
             message.chat.id,
-            f"{message.from_user.first_name}," f" приветствую! Я бот Терешкова, жду дальнейших указаний!",
+            f"{message.from_user.first_name}," f" приветствую! Я бот Есенин, жду дальнейших указаний!",
             # self.keybords.start_menu()- берем из класса родителя Handler.
             reply_markup=self.keybords.start_menu(),
         )
