@@ -14,8 +14,7 @@ class Handler(metaclass=abc.ABCMeta):
         self.bot = bot
         # инициализируем разметку кнопок
         self.keybords = Keyboards()
-        # инициализируем менеджер для работы с БД
-        self.BD = get_db()
+        
 
     @abc.abstractmethod
     def handle(self):

@@ -157,7 +157,7 @@ class Order(Base):
         """
         Метод возвращает строковое представление объекта класса
         """
-        return f"{self.quantity} {self.date}"
+        return f"{self.id} {self.date}"
 
 
 class OrderProduct(Base):
@@ -166,7 +166,7 @@ class OrderProduct(Base):
     основан на декларативном стиле SQLAlchemy
     """
 
-    # название таблицы
+  
     __tablename__ = "orders_products"
 
     # поля таблицы

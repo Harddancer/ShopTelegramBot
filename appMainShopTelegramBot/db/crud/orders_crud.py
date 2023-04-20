@@ -102,3 +102,7 @@ def delete_order(order_id: int, db: Session = next(get_db())):
         return {"content": [], "msg_type": "w", "msg": msg}
 
     return {"content": [], "msg_type": "a", "msg": "Заказ успешно удален"}
+
+
+
+
