@@ -3,7 +3,7 @@ from backend.handlers.handler import Handler
 from settings import config
 # импортируем ответ пользователю
 from settings.message import MESSAGES
-
+from db.crud.answers_crud import get_answer_all
 
 class HandlerAllText(Handler):
     """
@@ -16,17 +16,17 @@ class HandlerAllText(Handler):
     
     def pressed_btn_category(self, message):
         """
-        Обработка события нажатия на кнопку 'Выбрать товар'. А точнее
+        Обработка события нажатия на кнопку 'Меню'. А точнее
         это выбор категории товаров
         """
-        self.bot.send_message(message.chat.id, "Каталог категорий товара",
+        self.bot.send_message(message.chat.id, "Меню",
                               reply_markup=self.keybords.remove_menu())
         self.bot.send_message(message.chat.id, "Сделайте свой выбор",
                               reply_markup=self.keybords.category_menu())
 
     def pressed_btn_info(self, message):
         """
-        Обработчик кнопочки 'О магазине'
+        Обработчик кнопочки 'О кафе'
         """
         self.bot.send_message(
             message.chat.id, MESSAGES["trading_store"], parse_mode="HTML", reply_markup=self.keybords.info_menu()
@@ -39,12 +39,26 @@ class HandlerAllText(Handler):
         self.bot.send_message(
             message.chat.id, MESSAGES["settings"], parse_mode="HTML", reply_markup=self.keybords.settings_menu()
         )
+    
+    def pressed_btn_comment(self, message):
+        """
+        Обработчик кнопочки 'Отзывы о блюдах'
+        """
+        answer_all=get_answer_all()["content"]
 
+        self.bot.send_message(message.chat.id, "👇 Отзывы на наши блюда и напитки 😋",
+                              reply_markup=self.keybords.comment_menu())
+        for itm in answer_all:
+            self.bot.send_message(message.chat.id, 
+                                MESSAGES["comment"].
+                                format(itm[0], itm[1]), parse_mode="HTML")
+        
     def pressed_btn_back(self, message):
         """
         обрабатывает входящие текстовые сообщения от нажатия на кнопку 'Назад'.
         """
-        self.bot.send_message(message.chat.id, "Вы вернулись назад", reply_markup=self.keybords.start_menu())
+        self.bot.send_message(message.chat.id, "👇 Вы вернулись в главное меню", 
+                              reply_markup=self.keybords.start_menu())
 
     def pressed_btn_product(self, message, product):
         """
@@ -53,9 +67,7 @@ class HandlerAllText(Handler):
         """
         self.bot.send_message(message.chat.id, 'Категория ' +
                               config.KEYBOARD[product],
-                              reply_markup=
-                              self.keybords.set_select_category(
-                                  config.CATEGORY[product]))
+                              reply_markup=self.keybords.set_select_category(config.CATEGORY[product]))
         self.bot.send_message(message.chat.id, "Ок",
                               reply_markup=self.keybords.category_menu())
     
@@ -73,6 +85,9 @@ class HandlerAllText(Handler):
 
             if message.text == config.KEYBOARD["SETTINGS"]:
                 self.pressed_btn_settings(message)
+            
+            if message.text == config.KEYBOARD["COMMENT"]:
+                self.pressed_btn_comment(message)
 
             if message.text == config.KEYBOARD["<<"]:
                 self.pressed_btn_back(message)

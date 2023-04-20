@@ -1,7 +1,7 @@
 import logging
 
 from db.database import get_db
-from db.models import Answer
+from db.models import Answer, Product
 from db.schemas import AnswerSchema
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
@@ -53,6 +53,25 @@ def get_answer_by_id(answer_id: int, db: Session = next(get_db())):
         logging.warning(msg)
         return {"content": [], "msg_type": "w", "msg": msg}
 
+
+def get_answer_all(db: Session = next(get_db())):
+    """Получение всех отзывов из БД 
+
+    Args:
+        db: сессия подключения к базе данных
+
+    Returns:
+        Запись о всех отзывах из БД
+    """
+    # получение отзыва
+    answer_all = db.query(Product.name, Answer.text).join(Product).all()
+    if answer_all:
+        return {"content": answer_all, "msg_type": "a", "msg": "Done"}
+    else:
+        msg = "Отзывов не существует"
+        logging.warning(msg)
+        return {"content": [], "msg_type": "w", "msg": msg}
+    
 
 def update_answer(answer_id: int, obj: AnswerSchema, db: Session = next(get_db())):
     """Обновление отзыва в БД

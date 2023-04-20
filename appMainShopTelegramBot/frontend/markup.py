@@ -22,7 +22,7 @@ class Keyboards:
         """
 
         return KeyboardButton(config.KEYBOARD[name])
-
+    
     def start_menu(self):
         """
         Создает разметку кнопок в основном меню и возвращает разметку
@@ -57,7 +57,18 @@ class Keyboards:
         # рассположение кнопок в меню
         self.markup.row(itm_btn_1)
         return self.markup
-
+    
+    def comment_menu(self):
+        """
+        Выводид все отзывы из БД
+        Создает разметку кнопок в меню 'Отзывы'
+        """
+        self.markup = ReplyKeyboardMarkup(True, True)
+        itm_btn_1 = self.set_btn("<<")
+        # рассположение кнопок в меню
+        self.markup.row(itm_btn_1)
+        return self.markup
+    
     @staticmethod
     def remove_menu():
         """
