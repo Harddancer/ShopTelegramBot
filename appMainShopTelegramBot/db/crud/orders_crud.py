@@ -105,4 +105,43 @@ def delete_order(order_id: int, db: Session = next(get_db())):
 
 
 
+def get_user_id_all_from_order(db: Session = next(get_db())):
+    """Получение всех user_id из order
+
+    Args:
+        
+        db: сессия подключения к базе данных
+
+    Returns:
+        Список user_id
+    """
+    # получение user_id  из заказов
+    user_id_all = db.query(Order.user_id).all()
+    if user_id_all:
+        return {"content": user_id_all, "msg_type": "a", "msg": "Done"}
+    else:
+        msg = "Данных user_id  нет"
+        logging.warning(msg)
+        return {"content": [], "msg_type": "w", "msg": msg}
+    
+
+def get_order_by_user_id(user_id:int, db: Session = next(get_db())):
+    """Получение актуального заказа пользователя
+
+    Args:
+        db: сессия подключения к базе данных
+
+    Returns:
+        Заказ user_id
+    """
+    # получение order
+    order_by_user_id = db.query(Order).filter(Order.user_id == user_id).first()
+    if order_by_user_id:
+        return {"content": order_by_user_id, "msg_type": "a", "msg": "Done"}
+    else:
+        msg = "Данных по заказу  нет"
+        logging.warning(msg)
+        return {"content": [], "msg_type": "w", "msg": msg}
+    
+
 

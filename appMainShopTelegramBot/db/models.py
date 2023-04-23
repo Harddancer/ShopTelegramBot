@@ -146,6 +146,7 @@ class Order(Base):
     id = Column(Integer, primary_key=True, autoincrement=True, index=True)
     date = Column(Date)
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"))
+    
 
     # отношения
     users = relationship("User", back_populates=__tablename__)
