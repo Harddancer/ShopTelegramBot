@@ -1,7 +1,7 @@
 import logging
 
 from db.database import get_db
-from db.models import OrderProduct
+from db.models import OrderProduct,Product
 from db.schemas import OrderProductSchema
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
@@ -99,3 +99,23 @@ def delete_order_product(order_product_id: int, db: Session = next(get_db())):
         return {"content": [], "msg_type": "w", "msg": msg}
 
     return {"content": [], "msg_type": "a", "msg": "Товар успешно удален"}
+
+
+def get_product_all_from_order(order_id: int, db: Session = next(get_db())):
+    """Получение записи о товаре в заказе из БД
+
+    Args:
+        order_product_id: id записи о товаре в заказе
+        db: сессия подключения к базе данных
+
+    Returns:
+        Запись о товаре в заказе из БД
+    """
+    # получение записи о товаре в заказе
+    products = db.query(OrderProduct.order_id,OrderProduct.product_id,Product.title,Product.name,Product.price).join(Product)
+    if products:
+        return {"content": products, "msg_type": "a", "msg": "Done"}
+    else:
+        msg = "Нет товаров"
+        logging.warning(msg)
+        return {"content": [], "msg_type": "w", "msg": msg}
