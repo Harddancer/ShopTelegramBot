@@ -27,7 +27,7 @@ from sqlalchemy.orm import sessionmaker
 load_dotenv()
 
 SQLITE_NAME = os.environ.get("SQLITE_NAME")
-engine = create_engine(f"sqlite:///{SQLITE_NAME}", future=True)
+engine = create_engine(f"sqlite:///{SQLITE_NAME}", connect_args={"check_same_thread": False}, future=True)
 
 SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 
